@@ -2,6 +2,7 @@ import os
 import cv2
 import numpy as np
 import onnxruntime as ort
+from core.capture import capture, store_image
 from core.speech import speak
 
 class_names = [
@@ -45,8 +46,9 @@ model_path = os.path.abspath("models/model_lite.onnx")
 model = Detection(model_path)
 
 
-def detect(image):
+def detect():
     text = ""
+    image = capture()
     bboxes, scores, labels = model(image)
 
     for box, score, class_id in zip(bboxes, scores, labels):
@@ -76,4 +78,5 @@ def detect(image):
     else:
         text = "no detection!"
         speak(text)
-    return image
+
+    store_image(image)

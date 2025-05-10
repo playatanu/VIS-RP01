@@ -1,11 +1,22 @@
 import cv2
+from core.config import config
+
+CAMERA_ID = config["camera"]["id"]
+WIDTH = config["camera"]["width"]
+HEIGHT = config["camera"]["height"]
+CROP = config["camera"]["crop"]
+OUTPUT_FILENAME = config["camera"]["output_filename"]
 
 
-def capture(camera_id=0):
-    cap = cv2.VideoCapture(camera_id)
+def store_image(image):
+    cv2.imwrite(OUTPUT_FILENAME, image)
 
-    cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)
-    cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)
+
+def capture():
+    cap = cv2.VideoCapture(CAMERA_ID)
+
+    cap.set(cv2.CAP_PROP_FRAME_WIDTH, WIDTH)
+    cap.set(cv2.CAP_PROP_FRAME_HEIGHT, HEIGHT)
 
     if not cap.isOpened():
         print("Error: Cannot open camera")
@@ -16,7 +27,7 @@ def capture(camera_id=0):
     if ret:
         height, width = frame.shape[:2]
 
-        crop_size = min(height, width, 640)
+        crop_size = min(height, width, CROP)
 
         start_x = (width - crop_size) // 2
         start_y = (height - crop_size) // 2

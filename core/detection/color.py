@@ -1,6 +1,8 @@
 import cv2
 import numpy as np
+from core.capture import capture, store_image
 from core.speech import speak
+from core.config import config
 
 colors_hsv = {
     "Red": [(0, 120, 70), (10, 255, 255)],
@@ -14,7 +16,8 @@ colors_hsv = {
 }
 
 
-def detect(image):
+def detect():
+    image = capture()
     hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
     color_found = None
 
@@ -40,4 +43,4 @@ def detect(image):
         2,
     )
 
-    return image
+    store_image(image)

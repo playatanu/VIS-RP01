@@ -1,0 +1,16 @@
+project:
+  name: "VIS-RP01"
+  version: "1.0.0"
+  author: "Atanu Debnath"
+
+paths:
+  data_dir: "./data"
+  output_dir: "./output"
+  model_dir: "./models"
+
+camera:
+  id: 0
+  width: 1280
+  height: 720
+  crop: 640
+  output_filename: "capure_image.jpg"
