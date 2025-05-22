@@ -60,6 +60,13 @@ def on_press(key):
 
 
 if __name__ == "__main__":
-    speak(OPTIONS[CURRENT_MENU_SELECTED])
-    with Listener(on_press=on_press) as listener:
-        listener.join()
+    # speak(OPTIONS[CURRENT_MENU_SELECTED])
+    # with Listener(on_press=on_press) as listener:
+    #     listener.join()
+
+    while True:
+        key = input("key: ")
+        if key == "exit":
+            exit()
+
+        select_mode(int(key))
