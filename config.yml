@@ -10,7 +10,6 @@ paths:
 
 camera:
   id: 0
-  width: 1280
-  height: 720
-  crop: 640
-  output_filename: "capure_image.jpg"
+  width: 640
+  height: 640
+  output_filename: "output.jpg"
