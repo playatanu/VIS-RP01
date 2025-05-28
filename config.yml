@@ -1,6 +1,6 @@
 project:
   name: "VIS-RP01"
-  version: "1.0.0"
+  version: "1.0.1"
   author: "Atanu Debnath"
 
 paths:
@@ -11,5 +11,5 @@ paths:
 camera:
   id: 0
   width: 640
-  height: 640
+  height: 480
   output_filename: "output.jpg"

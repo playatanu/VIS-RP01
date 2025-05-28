@@ -1,3 +1,5 @@
+# sudo apt install tesseract-ocr
+
 import cv2
 import pytesseract
 from core.capture import capture, store_image

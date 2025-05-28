@@ -14,52 +14,25 @@ def store_image(image):
 
 
 def capture():
-    subprocess.run(
-        [
-            "fswebcam",
-            "-r",
-            f"{WIDTH}x{HEIGHT}",
-            "-d" f"/dev/video{CAMERA_ID}",
-            "--no-banner",
-            "image.jpg",
-        ]
-    )
+    cmd = [
+        "gst-launch-1.0", "-e",
+        "v4l2src", f"device=/dev/video{CAMERA_ID}", "num-buffers=1",
+        "!", f"video/x-raw,width={WIDTH},height={HEIGHT}",
+        "!", "videoconvert",
+        "!", "jpegenc",
+        "!", "filesink", "location=image.jpg"
+    ]
 
-    cwd = os.getcwd()
-    image_path = os.path.join(cwd, "image.jpg")
-    image = cv2.imread(image_path)
-    return image
+    try:
+        subprocess.run(cmd, check=True)
+        print("Photo captured successfully.")
+        cwd = os.getcwd()
+        image_path = os.path.join(cwd, "image.jpg")
+        image = cv2.imread(image_path)
+        return image
+    except subprocess.CalledProcessError as e:
+        print(f"Error capturing photo: {e}")
 
 
-# def capture():
-#     cap = cv2.VideoCapture(CAMERA_ID)
 
-#     cap.set(cv2.CAP_PROP_FRAME_WIDTH, WIDTH)
-#     cap.set(cv2.CAP_PROP_FRAME_HEIGHT, HEIGHT)
 
-#     if not cap.isOpened():
-#         print("Error: Cannot open camera")
-#         exit()
-
-#     ret, frame = cap.read()
-
-#     if ret:
-#         height, width = frame.shape[:2]
-
-#         crop_size = min(height, width, CROP)
-
-#         start_x = (width - crop_size) // 2
-#         start_y = (height - crop_size) // 2
-
-#         cropped_image = frame[
-#             start_y : start_y + crop_size, start_x : start_x + crop_size
-#         ]
-
-#         cap.release()
-#         return cropped_image
-
-#     else:
-#         print("Error: Failed to capture image.")
-
-#     cap.release()
-#     return frame
