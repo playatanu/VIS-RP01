@@ -14,6 +14,7 @@ def store_image(image):
 
 
 def capture():
+    """
     cmd = [
         "gst-launch-1.0", "-e",
         "v4l2src", f"device=/dev/video{CAMERA_ID}", "num-buffers=1",
@@ -21,6 +22,15 @@ def capture():
         "!", "videoconvert",
         "!", "jpegenc",
         "!", "filesink", "location=image.jpg"
+    ]
+    """
+    
+    cmd = [
+        "libcamera-jpeg", 
+        "-n",
+        "--width", f"{WIDTH}",
+        "--height", f"{HEIGHT}",
+        "-o", "image.jpg"
     ]
 
     try:
